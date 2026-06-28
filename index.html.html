@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Cyber Réflexe — sensibilisez-vous et vos équipes aux arnaques et au phishing, avec efficacité.">
+<title>Cyber Réflexe — Sensibilisez-vous et vos équipes, avec efficacité</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:light;
+    --paper:#f3eee4;
+    --paper-2:#ebe4d6;
+    --card:#fbf8f1;
+    --ink:#16140f;
+    --ink-soft:#6c6557;
+    --ink-faint:#9b9484;
+    --line:rgba(22,20,15,.13);
+    --line-soft:rgba(22,20,15,.07);
+    --navy:#21364a;
+    --gold:#ab8541;
+    --gold-soft:rgba(171,133,65,.16);
+    --scam:#97392b;
+    --scam-soft:#eddfd9;
+    --safe:#3a5a41;
+    --safe-soft:#e0e8db;
+    --maxw:1080px;
+    --r:5px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  button{-webkit-text-fill-color:currentColor;-webkit-tap-highlight-color:transparent;font-family:inherit}
+  html{scroll-behavior:smooth}
+  body{font-family:'Jost',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;
+    line-height:1.55;font-weight:400;min-height:100vh;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.75;
+    background:radial-gradient(820px 520px at 86% -12%,rgba(171,133,65,.09),transparent 60%),
+    radial-gradient(640px 460px at -10% 112%,rgba(33,54,74,.06),transparent 60%)}
+  .serif{font-family:'Fraunces',serif;font-optical-sizing:auto}
+
+  /* ---------- header ---------- */
+  .hdr{position:sticky;top:0;z-index:40;background:transparent;transition:background .35s,border-color .35s,backdrop-filter .35s;
+    border-bottom:1px solid transparent}
+  .hdr.stuck{background:rgba(243,238,228,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+  .hdr-in{max-width:var(--maxw);margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-family:'Fraunces',serif;font-weight:500;font-size:19px;letter-spacing:.03em;color:var(--ink);cursor:pointer;
+    display:flex;align-items:center;gap:11px;background:none;border:none}
+  .brand .mk{width:9px;height:9px;border:1px solid var(--gold);position:relative;transform:rotate(45deg)}
+  .brand .mk::after{content:"";position:absolute;inset:2px;background:var(--navy)}
+  .hdr-cta{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--ink);
+    background:none;border:none;cursor:pointer;padding:8px 0;border-bottom:1px solid var(--ink)}
+  .hdr-cta:hover{color:var(--ink-soft);border-color:var(--ink-soft)}
+
+  .app{max-width:var(--maxw);margin:0 auto;padding:0 24px 40px;position:relative;z-index:1}
+  .narrow{max-width:680px}
+
+  /* ---------- buttons ---------- */
+  .btn{border:none;cursor:pointer;font-weight:500;font-size:13.5px;letter-spacing:.08em;text-transform:uppercase;
+    border-radius:var(--r);padding:17px 26px;transition:background .25s,color .25s,transform .12s,border-color .25s;
+    display:inline-flex;align-items:center;justify-content:center;gap:9px}
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:var(--ink);color:var(--paper)}
+  .btn-primary:hover{background:#000}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--ink)}
+  .btn-block{width:100%}
+  .btn-sm{padding:13px 18px;font-size:12px}
+
+  /* ---------- screens ---------- */
+  .screen{display:none}
+  .screen.active{display:block;animation:fade .55s cubic-bezier(.2,.75,.25,1) both}
+  @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  /* scroll reveal */
+  .rv{opacity:0;transform:translateY(26px);transition:opacity .85s cubic-bezier(.2,.75,.25,1),transform .85s cubic-bezier(.2,.75,.25,1)}
+  .rv.show{opacity:1;transform:none}
+  .stag .rv.show:nth-child(1){transition-delay:.04s}
+  .stag .rv.show:nth-child(2){transition-delay:.12s}
+  .stag .rv.show:nth-child(3){transition-delay:.20s}
+  .stag .rv.show:nth-child(4){transition-delay:.28s}
+  @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:72px 0 40px}
+  .eyebrow{font-size:11.5px;letter-spacing:.30em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:26px}
+  .hero h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(42px,8vw,80px);line-height:1.0;letter-spacing:-.018em;max-width:14ch}
+  .hero h1 em{font-style:italic;font-weight:400}
+  .hero .lede{font-size:clamp(16px,2.2vw,19px);color:var(--ink-soft);max-width:48ch;margin-top:28px;font-weight:300}
+  .hero-cta{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap}
+  .scrollcue{display:flex;align-items:center;gap:15px;margin-top:54px}
+  .scrollcue .ln{height:1px;width:70px;background:var(--gold)}
+  .scrollcue .t{font-size:10.5px;letter-spacing:.30em;text-transform:uppercase;color:var(--ink-faint)}
+
+  /* ---------- section frame ---------- */
+  .sec{padding:64px 0;border-top:1px solid var(--line-soft)}
+  .sec-eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;margin-bottom:18px}
+  .sec h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(28px,4.5vw,42px);line-height:1.08;letter-spacing:-.01em;max-width:18ch}
+  .sec .sub{font-size:16px;color:var(--ink-soft);max-width:52ch;margin-top:16px;font-weight:300}
+
+  /* constat */
+  .constat{display:flex;align-items:baseline;gap:28px;flex-wrap:wrap}
+  .constat .big{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(72px,16vw,150px);line-height:.82;letter-spacing:-.03em;color:var(--ink)}
+  .constat .txt{font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:clamp(22px,3.4vw,32px);line-height:1.2;max-width:16ch;color:var(--ink)}
+  .constat-note{font-size:15px;color:var(--ink-soft);font-weight:300;margin-top:26px;max-width:54ch}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:1fr;gap:0;margin-top:36px}
+  .step{display:flex;gap:22px;padding:26px 0;border-top:1px solid var(--line-soft)}
+  .step .sn{font-family:'Fraunces',serif;font-size:14px;color:var(--gold);min-width:30px;padding-top:5px}
+  .step h3{font-family:'Fraunces',serif;font-weight:400;font-size:21px;margin-bottom:6px}
+  .step p{font-size:14.5px;color:var(--ink-soft);font-weight:300;max-width:46ch}
+
+  /* access entries — cartes */
+  .entries{display:grid;grid-template-columns:1fr;gap:16px;margin-top:30px}
+  .entry{position:relative;display:flex;flex-direction:column;gap:11px;padding:32px 30px 36px;
+    border:1px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer;
+    text-align:left;width:100%;color:var(--ink);
+    transition:transform .3s cubic-bezier(.2,.75,.25,1),box-shadow .35s,border-color .35s}
+  .entry:hover{transform:translateY(-4px);box-shadow:0 22px 46px -26px rgba(22,20,15,.45);border-color:rgba(171,133,65,.5)}
+  .entry .num{font-family:'Fraunces',serif;font-size:13px;letter-spacing:.12em;color:var(--gold)}
+  .entry .body h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(23px,2.3vw,28px);letter-spacing:-.01em;color:var(--ink);transition:color .3s;line-height:1.08}
+  .entry:hover .body h3{color:var(--navy)}
+  .entry .body p{font-size:14.5px;color:var(--ink-soft);margin-top:9px;font-weight:300;max-width:42ch}
+  .entry .go{position:absolute;top:30px;right:30px;font-family:'Fraunces',serif;font-size:20px;color:var(--ink-faint);transition:transform .3s,color .3s}
+  .entry:hover .go{transform:translateX(5px);color:var(--ink)}
+
+  /* audience */
+  .aud{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:30px}
+  .aud .a{background:var(--paper);padding:28px 24px}
+  .aud .a .t{font-family:'Fraunces',serif;font-size:20px;margin-bottom:8px}
+  .aud .a p{font-size:14px;color:var(--ink-soft);font-weight:300}
+
+  /* closing cta */
+  .cta-band{margin-top:64px;padding:64px 32px;border:1px solid var(--line);background:var(--card);border-radius:var(--r);text-align:center}
+  .cta-band h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(28px,5vw,44px);line-height:1.05}
+  .cta-band p{color:var(--ink-soft);font-weight:300;margin-top:14px;max-width:46ch;margin-left:auto;margin-right:auto}
+  .cta-band .btn{margin-top:30px}
+
+  .foot{margin-top:60px;padding:34px 0 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;
+    align-items:flex-end;gap:20px;flex-wrap:wrap}
+  .foot .fb{font-family:'Fraunces',serif;font-size:18px}
+  .foot .ft{font-size:12px;color:var(--ink-faint);font-weight:300;line-height:1.6;max-width:40ch}
+
+  /* ---------- inner pages ---------- */
+  .back{background:none;border:none;color:var(--ink-soft);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    cursor:pointer;margin:34px 0 28px;font-weight:500}
+  .back:hover{color:var(--ink)}
+  .page-title{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,7vw,48px);line-height:1.05;letter-spacing:-.01em}
+  .page-intro{font-size:16px;color:var(--ink-soft);max-width:52ch;margin-top:16px;font-weight:300}
+
+  .princ{margin-top:38px;max-width:760px}
+  .pr{display:flex;gap:24px;padding:26px 0;border-top:1px solid var(--line-soft)}
+  .pr .pn{font-family:'Fraunces',serif;font-size:14px;color:var(--gold);min-width:32px;padding-top:4px}
+  .pr h4{font-family:'Fraunces',serif;font-weight:400;font-size:21px;margin-bottom:7px}
+  .pr p{font-size:14.5px;color:var(--ink-soft);font-weight:300;max-width:58ch}
+
+  /* forms */
+  .panel{margin-top:32px;max-width:440px}
+  .field+.field{margin-top:24px}
+  label{display:block;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:11px}
+  .input{width:100%;font-family:'Jost';font-size:16px;padding:14px 2px;border:none;border-bottom:1px solid var(--line);
+    background:transparent;color:var(--ink);outline:none;transition:border-color .25s}
+  .input:focus{border-color:var(--ink)}
+  .input::placeholder{color:var(--ink-faint)}
+  .input.code{letter-spacing:.5em;text-transform:uppercase;font-family:'Fraunces',serif;font-size:27px;text-align:center;padding:12px 0}
+  .hint{font-size:13px;margin-top:16px;font-weight:300}
+  .err{color:var(--scam)}
+
+  /* quiz */
+  .quizwrap{padding-top:36px;max-width:680px}
+  .qtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .qcount{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);font-weight:500}
+  .qscore{font-family:'Fraunces',serif;font-size:16px}
+  .track{height:2px;background:var(--line);overflow:hidden;margin-bottom:34px}
+  .bar{height:100%;width:0;background:var(--navy);transition:width .55s cubic-bezier(.2,.8,.2,1)}
+  .msg{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+  .msg .mh{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line-soft)}
+  .msg .kind{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;border:1px solid var(--gold-soft);padding:4px 9px;border-radius:2px}
+  .msg .who{font-weight:500;font-size:14px}
+  .msg .when{margin-left:auto;font-size:12px;color:var(--ink-faint);font-weight:300}
+  .msg .mb{padding:24px 20px;font-size:16px;line-height:1.6;white-space:pre-line;color:#2a271f;font-weight:300}
+  .msg .lk{color:var(--navy);word-break:break-all;border-bottom:1px solid rgba(33,54,74,.35)}
+  .ask{font-family:'Fraunces',serif;font-style:italic;font-size:22px;margin:30px 0 16px}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .choice{cursor:pointer;font-weight:500;font-size:14px;letter-spacing:.06em;text-transform:uppercase;border-radius:var(--r);
+    padding:22px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);transition:.2s}
+  .choice:hover:not(:disabled){border-color:var(--ink);transform:translateY(-1px)}
+  .choice:disabled{cursor:default}
+  .choice.pick-ok{background:var(--safe-soft);border-color:var(--safe);color:var(--safe)}
+  .choice.pick-no{background:var(--scam-soft);border-color:var(--scam);color:var(--scam)}
+  .choice.show-ok{border-color:var(--safe);box-shadow:inset 0 0 0 1px var(--safe)}
+  .choice.dim{opacity:.4}
+  .explain{margin-top:24px;border-left:2px solid var(--ink);padding:4px 0 4px 22px;display:none}
+  .explain.show{display:block;animation:fade .45s both}
+  .explain.scam{border-color:var(--scam)} .explain.legit{border-color:var(--safe)}
+  .vd{font-family:'Fraunces',serif;font-size:21px;margin-bottom:10px}
+  .explain.scam .vd{color:var(--scam)} .explain.legit .vd{color:var(--safe)}
+  .explain .lead{font-size:14.5px;color:var(--ink-soft);line-height:1.55;font-weight:300}
+  .clues{list-style:none;margin:14px 0 0;display:grid;gap:9px}
+  .clues li{font-size:13.5px;line-height:1.5;display:flex;gap:11px;color:var(--ink-soft);font-weight:300}
+  .clues li i{color:var(--gold);font-style:normal;flex:none}
+  .next{margin-top:26px}
+
+  /* result */
+  .res-head{padding-top:42px;max-width:680px}
+  .res-eyebrow{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:500}
+  .res-score{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(80px,22vw,132px);line-height:.86;margin:14px 0 4px;letter-spacing:-.02em}
+  .res-score small{font-size:.27em;color:var(--ink-faint)}
+  .res-verd{font-family:'Fraunces',serif;font-style:italic;font-size:26px;margin-bottom:8px}
+  .res-msg{font-size:15px;color:var(--ink-soft);max-width:48ch;font-weight:300}
+  .saved{font-size:13px;color:var(--navy);margin-top:24px;display:flex;gap:10px;align-items:center}
+  .saved::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold)}
+  .review{margin:14px 0 30px;max-width:680px}
+  .rev{padding:20px 0;border-top:1px solid var(--line-soft)}
+  .rev .rh{display:flex;align-items:center;gap:12px;margin-bottom:7px}
+  .rev .rh .w{font-family:'Fraunces',serif;font-size:17px}
+  .rev .rh .tag{margin-left:auto;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:4px 9px;border-radius:2px}
+  .tag.scam{background:var(--scam-soft);color:var(--scam)} .tag.legit{background:var(--safe-soft);color:var(--safe)}
+  .rev p{font-size:13.5px;color:var(--ink-soft);font-weight:300;line-height:1.5}
+  .res-btns{display:flex;gap:12px;flex-wrap:wrap;max-width:680px}
+
+  /* session created */
+  .codebox{margin-top:34px;padding:40px 28px;border:1px solid var(--line);background:var(--card);border-radius:var(--r);text-align:center;max-width:440px}
+  .codebox .cl{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-faint);font-weight:500}
+  .codebox .cc{font-family:'Fraunces',serif;font-size:54px;letter-spacing:.32em;margin:14px 0 6px;padding-left:.32em}
+  .codebox .ct{font-size:13.5px;color:var(--ink-soft);font-weight:300}
+  .rowbtns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px;max-width:440px}
+
+  /* dashboard */
+  .dash-top{padding-top:38px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .dash-code{font-size:12px;color:var(--ink-soft);margin-top:8px}
+  .dash-code b{font-family:'Fraunces',serif;letter-spacing:.18em}
+  .dstat{display:grid;grid-template-columns:repeat(3,1fr);margin:30px 0 36px;border:1px solid var(--line);max-width:560px}
+  .dbox{padding:22px 14px;text-align:center;border-right:1px solid var(--line)}
+  .dbox:last-child{border-right:none}
+  .dbox .dn{font-family:'Fraunces',serif;font-size:30px}
+  .dbox .dl{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;margin-top:4px}
+  .ptable{max-width:680px}
+  .prow{display:flex;align-items:center;gap:16px;padding:16px 4px;border-top:1px solid var(--line-soft);animation:fade .4s both}
+  .prow .pn{font-size:15px;min-width:90px}
+  .prow .pbarwrap{flex:1;max-width:200px;height:3px;background:var(--line);overflow:hidden}
+  .prow .pbar{height:100%}
+  .prow .ps{margin-left:auto;font-family:'Fraunces',serif;font-size:17px}
+  .empty{padding:42px 6px;text-align:center;color:var(--ink-soft);font-weight:300;font-size:14.5px}
+  .empty b{font-family:'Fraunces',serif;letter-spacing:.16em;color:var(--ink)}
+  .weak{margin-top:38px;max-width:680px}
+  .weak h3{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;margin-bottom:6px}
+  .wrow{display:flex;align-items:center;gap:12px;padding:15px 0;border-top:1px solid var(--line-soft);font-size:14px;font-weight:300}
+  .wrow .ww{font-family:'Fraunces',serif;font-size:16px}
+  .wrow .wk{font-size:11px;color:var(--ink-faint)}
+  .wrow .wp{margin-left:auto;font-family:'Fraunces',serif;color:var(--scam);font-size:15px}
+
+  .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);
+    padding:14px 24px;border-radius:var(--r);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;opacity:0;transition:.35s;z-index:60}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ---------- desktop ---------- */
+  @media(min-width:760px){
+    .steps{grid-template-columns:repeat(3,1fr);gap:0}
+    .step{flex-direction:column;gap:14px;border-top:none;border-left:1px solid var(--line-soft);padding:8px 28px 8px 22px}
+    .step:first-child{border-left:none;padding-left:0}
+    .aud{grid-template-columns:repeat(3,1fr)}
+    .entries{grid-template-columns:1fr 1fr;gap:18px;margin-top:36px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <button class="brand" onclick="go('home')"><span class="mk"></span>Cyber Réflexe</button>
+    <button class="hdr-cta" onclick="startSolo()">Commencer</button>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- ============ HOME ============ -->
+  <section class="screen active" id="home">
+
+    <div class="hero stag">
+      <div class="eyebrow rv">Anti-arnaque &nbsp;·&nbsp; Anti-phishing</div>
+      <h1 class="serif rv">Sensibilisez-vous et vos équipes, <em>avec efficacité.</em></h1>
+      <p class="lede rv">Un entraînement clair pour apprendre à repérer les arnaques en ligne. Des situations réelles, des séries courtes, et les points faibles révélés à la fin.</p>
+      <div class="hero-cta rv">
+        <button class="btn btn-primary" onclick="startSolo()">Tester mes réflexes →</button>
+        <button class="btn btn-ghost" onclick="scrollTo2('access')">Découvrir</button>
+      </div>
+      <div class="scrollcue rv"><span class="ln"></span><span class="t">Le constat</span></div>
+    </div>
+
+    <!-- constat -->
+    <section class="sec">
+      <div class="sec-eyebrow rv">Le constat</div>
+      <div class="constat">
+        <div class="big serif rv">8/10</div>
+        <div class="txt serif rv">cyberattaques commencent par une erreur humaine.</div>
+      </div>
+      <p class="constat-note rv">Un e-mail piégé, un lien cliqué trop vite, un mot de passe donné par téléphone. La technologie ne suffit pas : la première défense, c'est une équipe qui sait reconnaître le piège. C'est exactement ce que Cyber Réflexe entraîne.</p>
+    </section>
+
+    <!-- comment ça marche -->
+    <section class="sec">
+      <div class="sec-eyebrow rv">Comment ça marche</div>
+      <h2 class="serif rv">Trois étapes, quelques minutes.</h2>
+      <div class="steps stag">
+        <div class="step rv"><span class="sn serif">01</span><div><h3 class="serif">Choisir un parcours</h3><p>Se sensibiliser aux signaux d'alerte, ou s'entraîner directement sur des cas concrets.</p></div></div>
+        <div class="step rv"><span class="sn serif">02</span><div><h3 class="serif">Repérer les pièges</h3><p>Dix situations réelles à juger : arnaque ou message légitime ? Chaque réponse est expliquée.</p></div></div>
+        <div class="step rv"><span class="sn serif">03</span><div><h3 class="serif">Mesurer les progrès</h3><p>En session, le formateur suit les scores de son équipe et repère ce qui doit être revu.</p></div></div>
+      </div>
+    </section>
+
+    <!-- access -->
+    <section class="sec" id="access">
+      <div class="sec-eyebrow rv">Accéder</div>
+      <h2 class="serif rv">Par où commencer.</h2>
+      <div class="entries stag">
+        <button class="entry rv" onclick="go('learn')">
+          <span class="num serif">01</span>
+          <span class="body"><h3 class="serif">Se sensibiliser</h3><p>Comprendre comment fonctionnent les arnaques et les signaux qui doivent alerter.</p></span>
+          <span class="go">→</span>
+        </button>
+        <button class="entry rv" onclick="startSolo()">
+          <span class="num serif">02</span>
+          <span class="body"><h3 class="serif">S'entraîner</h3><p>Une série de dix situations tirées au hasard. Gratuit, sans compte.</p></span>
+          <span class="go">→</span>
+        </button>
+        <button class="entry rv" onclick="go('create')">
+          <span class="num serif">03</span>
+          <span class="body"><h3 class="serif">Créer une session</h3><p>Pour une classe ou une équipe, avec le suivi des résultats.</p></span>
+          <span class="go">→</span>
+        </button>
+        <button class="entry rv" onclick="go('join')">
+          <span class="num serif">04</span>
+          <span class="body"><h3 class="serif">Rejoindre une session</h3><p>Avec le code à six lettres transmis par votre formateur.</p></span>
+          <span class="go">→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- pour qui -->
+    <section class="sec">
+      <div class="sec-eyebrow rv">Pour qui</div>
+      <h2 class="serif rv">Pensé pour les structures comme pour les particuliers.</h2>
+      <div class="aud stag">
+        <div class="a rv"><div class="t serif">Écoles &amp; collèges</div><p>Le professeur lance une session, les élèves jouent, il voit en un coup d'œil qui a compris.</p></div>
+        <div class="a rv"><div class="t serif">Entreprises &amp; mairies</div><p>Formez vos agents et vos équipes au phishing, et mesurez leur progression dans le temps.</p></div>
+        <div class="a rv"><div class="t serif">Particuliers</div><p>Testez vos réflexes en quelques minutes. Accessible à tous, sans inscription.</p></div>
+      </div>
+    </section>
+
+    <!-- closing -->
+    <div class="cta-band rv">
+      <h2 class="serif">Prêt à tester vos réflexes ?</h2>
+      <p>Dix situations, quelques minutes. Vous verrez vite ce que vous repérez déjà — et ce qui vous échappe encore.</p>
+      <button class="btn btn-primary" onclick="startSolo()">Commencer l'entraînement →</button>
+    </div>
+
+    <footer class="foot">
+      <div class="fb serif">Cyber Réflexe</div>
+      <div class="ft">Prévention numérique — sensibilisation aux arnaques et au phishing. Démonstration interactive ; les résultats de session sont enregistrés le temps de la démonstration.</div>
+    </footer>
+  </section>
+
+  <!-- ============ LEARN ============ -->
+  <section class="screen" id="learn">
+    <button class="back" onclick="go('home')">← Retour</button>
+    <h2 class="page-title">Se sensibiliser</h2>
+    <p class="page-intro">Les arnaques changent de visage, mais elles reposent presque toujours sur les mêmes ressorts. En connaître six suffit à déjouer l'immense majorité d'entre elles.</p>
+    <div class="princ">
+      <div class="pr"><span class="pn serif">01</span><div><h4 class="serif">L'urgence</h4><p>« Sous 24h », « votre compte va être supprimé », « dernière chance ». La précipitation est volontaire : elle vous empêche de réfléchir. Un message qui vous presse doit d'abord vous rendre méfiant.</p></div></div>
+      <div class="pr"><span class="pn serif">02</span><div><h4 class="serif">Le lien qui ne correspond pas</h4><p>L'adresse n'est pas le vrai site officiel : fautes, mots ajoutés, extension étrange (.info, .ru), domaine approchant. Avant de cliquer, lisez l'adresse en entier.</p></div></div>
+      <div class="pr"><span class="pn serif">03</span><div><h4 class="serif">La demande d'informations sensibles</h4><p>Mot de passe, code de validation reçu par SMS, RIB, pièce d'identité. Aucune banque, aucun service sérieux ne les réclame par message ou par téléphone.</p></div></div>
+      <div class="pr"><span class="pn serif">04</span><div><h4 class="serif">Le gain trop beau</h4><p>Cadeau, remboursement, gros lot que vous n'avez jamais demandé. Il est presque toujours suivi de « petits frais » à régler — c'est là que se cache le piège.</p></div></div>
+      <div class="pr"><span class="pn serif">05</span><div><h4 class="serif">La pression émotionnelle</h4><p>La peur (une fraude, une amende) ou l'affection (un proche en détresse, un nouveau numéro). On joue sur vos émotions pour court-circuiter votre prudence.</p></div></div>
+      <div class="pr"><span class="pn serif">06</span><div><h4 class="serif">Le canal inhabituel</h4><p>Un « support » qui écrit en message privé, un appel qui réclame un code, un QR code collé sur une borne. Quand le canal sort de l'ordinaire, vérifiez par une voie officielle.</p></div></div>
+    </div>
+    <button class="btn btn-primary" style="margin-top:36px" onclick="startSolo()">Tester mes réflexes →</button>
+  </section>
+
+  <!-- ============ JOIN ============ -->
+  <section class="screen" id="join">
+    <button class="back" onclick="go('home')">← Retour</button>
+    <h2 class="page-title">Rejoindre une session</h2>
+    <p class="page-intro">Entrez le code transmis par votre formateur, puis votre prénom.</p>
+    <div class="panel">
+      <div class="field"><label>Code de session</label><input class="input code" id="joinCode" maxlength="6" placeholder="••••••" autocomplete="off"></div>
+      <div class="field"><label>Votre prénom</label><input class="input" id="joinName" placeholder="Sofia" autocomplete="off"></div>
+      <button class="btn btn-primary btn-block" style="margin-top:34px" onclick="joinSession()">Rejoindre →</button>
+      <p class="hint err" id="joinErr"></p>
+    </div>
+  </section>
+
+  <!-- ============ CREATE ============ -->
+  <section class="screen" id="create">
+    <button class="back" onclick="go('home')">← Retour</button>
+    <h2 class="page-title">Créer une session</h2>
+    <p class="page-intro">Donnez un nom à la session, partagez le code, et suivez les résultats en temps réel.</p>
+    <div id="createForm">
+      <div class="panel">
+        <div class="field"><label>Nom de la session</label><input class="input" id="sessTitle" placeholder="3ᵉ B — Sécurité numérique" autocomplete="off"></div>
+        <button class="btn btn-primary btn-block" style="margin-top:34px" onclick="createSession()">Créer la session</button>
+        <p class="hint"><button class="back" style="margin:0;padding:0" onclick="go('lookup')">J'ai déjà une session → voir les résultats</button></p>
+      </div>
+    </div>
+    <div id="createDone" style="display:none">
+      <div class="codebox">
+        <div class="cl">Code à partager</div>
+        <div class="cc serif" id="newCode">——————</div>
+        <div class="ct" id="newTitle"></div>
+      </div>
+      <p class="hint" style="color:var(--ink-soft);max-width:440px">Les participants choisissent <b>« Rejoindre une session »</b> et saisissent ce code.</p>
+      <div class="rowbtns">
+        <button class="btn btn-ghost btn-sm" onclick="copyCode()">Copier le code</button>
+        <button class="btn btn-primary btn-sm" onclick="openDash(window.__newCode)">Tableau de bord →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LOOKUP ============ -->
+  <section class="screen" id="lookup">
+    <button class="back" onclick="go('create')">← Retour</button>
+    <h2 class="page-title">Voir les résultats</h2>
+    <p class="page-intro">Entrez le code de votre session pour ouvrir son tableau de bord.</p>
+    <div class="panel">
+      <div class="field"><label>Code de session</label><input class="input code" id="lookupCode" maxlength="6" placeholder="••••••" autocomplete="off"></div>
+      <button class="btn btn-primary btn-block" style="margin-top:34px" onclick="openDash(document.getElementById('lookupCode').value)">Ouvrir →</button>
+      <p class="hint err" id="lookupErr"></p>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section class="screen" id="quiz">
+    <div class="quizwrap">
+      <div class="qtop"><span class="qcount" id="qcount">Question 1 / 10</span><span class="qscore serif" id="qscore">0</span></div>
+      <div class="track"><div class="bar" id="bar"></div></div>
+      <div class="msg">
+        <div class="mh"><span class="kind" id="ckind">SMS</span><span class="who" id="cw">Expéditeur</span><span class="when" id="cs"></span></div>
+        <div class="mb" id="qbody"></div>
+      </div>
+      <div class="ask serif">Votre verdict ?</div>
+      <div class="choices">
+        <button class="choice" id="bScam" onclick="answer(true)">Arnaque</button>
+        <button class="choice" id="bLegit" onclick="answer(false)">Légitime</button>
+      </div>
+      <div class="explain" id="explain">
+        <div class="vd serif" id="vd"></div>
+        <p class="lead" id="extext"></p>
+        <ul class="clues" id="clues"></ul>
+        <button class="btn btn-primary next" id="nextBtn" onclick="nextQ()">Suivant →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section class="screen" id="result">
+    <div class="res-head">
+      <div class="res-eyebrow" id="resKicker">Résultat</div>
+      <div class="res-score serif"><span id="rScore">0</span><small id="rTotal">/10</small></div>
+      <div class="res-verd serif" id="rVerd"></div>
+      <p class="res-msg" id="rMsg"></p>
+      <div class="saved" id="savedNote" style="display:none"><span id="savedTxt"></span></div>
+    </div>
+    <div id="reviewWrap">
+      <div class="sec-eyebrow" style="margin-top:40px">Les pièges manqués</div>
+      <div class="review" id="review"></div>
+    </div>
+    <div class="res-btns">
+      <button class="btn btn-primary" onclick="afterResult()" id="resBtn">Rejouer</button>
+      <button class="btn btn-ghost" onclick="go('home')">Accueil</button>
+    </div>
+  </section>
+
+  <!-- ============ DASHBOARD ============ -->
+  <section class="screen" id="dash">
+    <button class="back" onclick="go('home')">← Accueil</button>
+    <div class="dash-top">
+      <div><h2 class="page-title" id="dashTitle" style="font-size:32px">Session</h2><div class="dash-code">Code &nbsp;<b id="dashCode"></b></div></div>
+      <button class="btn btn-ghost btn-sm" onclick="openDash(window.__dashCode)">Actualiser</button>
+    </div>
+    <div class="dstat">
+      <div class="dbox"><div class="dn serif" id="dParticipants">0</div><div class="dl">Participants</div></div>
+      <div class="dbox"><div class="dn serif" id="dAvg">—</div><div class="dl">Moyenne</div></div>
+      <div class="dbox"><div class="dn serif" id="dBest">—</div><div class="dl">Meilleur</div></div>
+    </div>
+    <div class="ptable" id="ptable"></div>
+    <div class="weak" id="weakWrap"></div>
+    <p class="hint" style="color:var(--ink-faint);max-width:560px">Laissez cet onglet ouvert et cliquez sur <b>Actualiser</b> à mesure que les participants terminent.</p>
+  </section>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<!-- Firebase (Realtime Database) — nécessaire pour les sessions en ligne -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+<script>
+/* ============================================================
+   BANQUE DE SITUATIONS — scam:true = arnaque · false = légitime
+   Ajouter une situation = ajouter un objet ci-dessous.
+   ============================================================ */
+const BANK = [
+ {id:1,cat:"sms",cw:"Numéro inconnu",cs:"SMS · 14:32",scam:true,
+ body:"Votre colis Chronopost est en attente. Réglez les frais de douane (1,99€) sous 48h :\nhttp://chrono-suivi-livr.com/pay",
+ text:"Arnaque au faux colis : le but est de voler ta carte bancaire sur une fausse page de paiement.",
+ clues:["Le lien n'est pas le vrai site (chrono-suivi-livr.com).","On crée l'urgence avec un délai de 48h.","On demande un petit paiement pour paraître crédible."]},
+ {id:2,cat:"email",cw:"Instagram",cs:"Email · security@insta-verif.com",scam:true,
+ body:"Votre compte sera SUPPRIMÉ sous 24h pour non-respect des règles. Confirmez votre identité :\ninsta-verif.com/login",
+ text:"Faux mail de sécurité : la page vole ton identifiant et ton mot de passe.",
+ clues:["Adresse d'expéditeur non officielle.","Menace de suppression pour te faire paniquer.","Un vrai service ne demande jamais ton mot de passe par lien."]},
+ {id:3,cat:"legit",cw:"Ma Banque",cs:"SMS · expéditeur enregistré",scam:false,
+ body:"Code de validation : 482913. Ne le communiquez JAMAIS, même à un conseiller. Expire dans 5 min.",
+ text:"Légitime : c'est un vrai code 2FA, reçu quand TU fais une action.",
+ clues:["Aucun lien, aucune action demandée.","Il te dit de ne jamais partager le code.","Le piège serait quelqu'un qui t'appelle pour te le demander."]},
+ {id:4,cat:"prize",cw:"promo-cadeaux.net",cs:"Email · 09:10",scam:true,
+ body:"FÉLICITATIONS ! Vous gagnez un iPhone 16 Pro GRATUIT ! Plus que 2 cadeaux. Réclamez :\npromo-cadeaux.net/gagnant",
+ text:"Arnaque au faux gain : derrière, on demande tes infos ou un « petit » paiement.",
+ clues:["Tu n'as participé à aucun concours.","Trop beau pour être vrai.","Faux compte à rebours pour te précipiter."]},
+ {id:5,cat:"legit",cw:"Collège Jean Moulin",cs:"vie-scolaire@clg-jeanmoulin.ac-paris.fr",scam:false,
+ body:"Bonjour, la réunion parents-professeurs aura lieu jeudi 12 à 18h, salle B204. Aucune inscription nécessaire.",
+ text:"Légitime : information simple, sans urgence ni lien suspect.",
+ clues:["Domaine officiel d'académie (ac-paris.fr).","Aucun lien, aucun mot de passe demandé.","Pas d'urgence ni de menace."]},
+ {id:6,cat:"social",cw:"Ami(e) sur Snap",cs:"Message privé",scam:true,
+ body:"hey c trop toi ça t'as vu la vidéo ?? lol\nfree-vidz-clip.ru/voir?u=toi",
+ text:"Compte ami piraté : le lien vole ton compte puis renvoie le message à tes contacts.",
+ clues:["Ton/lien qui ne ressemblent pas à ton ami.","Extension douteuse (.ru).","Vérifie en écrivant à ton ami autrement."]},
+ {id:7,cat:"sms",cw:"AMELI",cs:"SMS · 11:05",scam:true,
+ body:"Votre carte Vitale est expirée. Mettez-la à jour pour continuer vos remboursements :\nameli-mise-a-jour.fr",
+ text:"Faux SMS Assurance Maladie : vise tes données perso et bancaires.",
+ clues:["Le vrai Ameli n'envoie pas de lien de ce type.","Domaine non officiel (le vrai est ameli.fr).","Joue sur la peur de perdre tes remboursements."]},
+ {id:8,cat:"email",cw:"Netflix",cs:"no-reply@netflix-paiement.com",scam:true,
+ body:"Votre paiement a échoué. Mettez à jour vos informations bancaires sous 24h pour éviter la suspension :\nnetflix-paiement.com",
+ text:"Phishing classique : page imitant Netflix pour récupérer ta carte.",
+ clues:["Domaine bidon (netflix-paiement.com).","Urgence + menace de suspension.","Netflix gère ça dans l'appli, pas par lien."]},
+ {id:9,cat:"legit",cw:"Amazon",cs:"Email · auto-confirm@amazon.fr",scam:false,
+ body:"Votre commande #402-558 a été expédiée. Livraison prévue mardi. Suivez-la depuis Vos commandes dans l'application.",
+ text:"Légitime : renvoie vers l'appli officielle, sans demander d'infos.",
+ clues:["Te dit d'aller dans l'appli, pas un lien à credentials.","Aucune demande de paiement ou mot de passe.","Correspond à une commande que tu as faite."]},
+ {id:10,cat:"call",cw:"« Service Microsoft »",cs:"Appel · numéro masqué",scam:true,
+ body:"Bonjour, votre ordinateur est infecté par un virus. Installez le logiciel d'accès à distance que je vous indique pour qu'on le nettoie.",
+ text:"Arnaque au faux support : on prend le contrôle de ton PC pour voler ou extorquer.",
+ clues:["Microsoft n'appelle jamais spontanément.","On veut un accès à distance à ton PC.","Pression pour agir tout de suite."]},
+ {id:11,cat:"sms",cw:"+33 7…",cs:"SMS · 19:48",scam:true,
+ body:"Coucou maman, j'ai cassé mon tel, c'est mon nouveau numéro. Tu peux me dépanner d'un virement urgent ? Je te rembourse demain",
+ text:"Arnaque « bonjour maman/papa » : on se fait passer pour ton enfant pour un virement.",
+ clues:["Nouveau numéro + urgence d'argent.","Pas de vérification possible par appel.","Le bon réflexe : appeler le vrai numéro de la personne."]},
+ {id:12,cat:"email",cw:"impots.gouv",cs:"remboursement@impot-gouv-fr.com",scam:true,
+ body:"Vous avez droit à un remboursement de 312,47€. Renseignez votre RIB pour le recevoir :\nimpot-gouv-fr.com/remb",
+ text:"Faux remboursement d'impôts : récupère ton RIB et tes infos.",
+ clues:["Le vrai domaine est impots.gouv.fr (pas impot-gouv-fr.com).","L'État ne demande pas ton RIB par mail.","L'appât du gain (« remboursement »)."]},
+ {id:13,cat:"legit",cw:"Google",cs:"Notification de connexion",scam:false,
+ body:"Nouvelle connexion à votre compte depuis un appareil Windows à Paris. Si c'était vous, aucune action n'est nécessaire.",
+ text:"Légitime : alerte de sécurité informative, sans lien piégé.",
+ clues:["Te dit que tout va bien si c'était toi.","N'exige ni mot de passe ni paiement.","Correspond à une connexion réelle."]},
+ {id:14,cat:"prize",cw:"Tirage au sort",cs:"SMS · 16:20",scam:true,
+ body:"Vous avez été sélectionné parmi nos clients fidèles pour gagner 500€ de bons d'achat. Cliquez vite : bit.ly/x9k2",
+ text:"Faux jeu : lien raccourci qui cache une page malveillante.",
+ clues:["Lien raccourci qui masque la vraie destination.","Gain non sollicité.","Aucune marque officielle clairement identifiée."]},
+ {id:15,cat:"social",cw:"Inconnu charmant",cs:"DM Instagram",scam:true,
+ body:"Bonjour, ton profil m'a touché. J'investis dans la crypto et je gagne beaucoup. Je peux t'apprendre, on commence avec 250€ ?",
+ text:"Arnaque sentimentale + investissement : le « rendement » disparaîtra avec ton argent.",
+ clues:["Inconnu très vite affectueux.","Promesse de gains faciles.","On te pousse à investir rapidement."]},
+ {id:16,cat:"email",cw:"Recrutement",cs:"job@offre-rapide-emploi.com",scam:true,
+ body:"Travaillez de chez vous, 400€/jour, aucune compétence requise ! Envoyez votre CV, pièce d'identité et RIB pour démarrer.",
+ text:"Fausse offre d'emploi : vol d'identité via tes documents.",
+ clues:["Salaire irréaliste sans compétence.","On demande pièce d'identité + RIB d'emblée.","Aucune entreprise réelle identifiable."]},
+ {id:17,cat:"qr",cw:"QR code parking",cs:"Autocollant sur l'horodateur",scam:true,
+ body:"Payez votre stationnement en scannant ce QR code. Redirige vers : paiement-parking-ville.com",
+ text:"« Quishing » : faux QR collé sur l'horodateur menant à une fausse page de paiement.",
+ clues:["QR code physique facilement remplaçable par un autocollant.","Domaine non officiel de la ville.","Préfère l'appli officielle ou la borne."]},
+ {id:18,cat:"legit",cw:"Confirmation commande",cs:"App de livraison",scam:false,
+ body:"Ta commande est en préparation Le livreur arrive dans ~25 min. Suis-le en direct dans l'application.",
+ text:"Légitime : suivi de commande dans l'appli, sans demande sensible.",
+ clues:["Renvoie vers l'appli, pas de lien externe.","Aucune info bancaire demandée.","Correspond à une commande passée."]},
+ {id:19,cat:"sms",cw:"Banque - Sécurité",cs:"SMS · 22:14",scam:true,
+ body:"Une dépense de 749€ a été détectée. Si ce n'est pas vous, annulez ici : secure-banq-verif.com/stop",
+ text:"Phishing par la peur : la « page d'annulation » vole tes identifiants bancaires.",
+ clues:["Lien non officiel de ta banque.","Joue sur la panique d'un débit.","Appelle ta banque via le numéro au dos de ta carte."]},
+ {id:20,cat:"email",cw:"Service informatique",cs:"it-support@ton-entreprise.co",scam:true,
+ body:"Maintenance urgente : reconnectez-vous ici pour ne pas perdre l'accès à votre messagerie pro :\nton-entreprise.co/owa-login",
+ text:"Phishing ciblé en entreprise : faux portail pour voler tes accès pro.",
+ clues:["Domaine .co au lieu du domaine habituel.","Urgence de reconnexion.","En cas de doute, contacte l'IT par un canal connu."]},
+ {id:21,cat:"prize",cw:"Loterie nationale",cs:"Email",scam:true,
+ body:"Votre adresse e-mail a remporté 850 000€ au tirage international. Contactez notre agent pour les frais de transfert.",
+ text:"Arnaque à la loterie : on réclame des « frais » pour un gain qui n'existe pas.",
+ clues:["Tu n'as jamais joué.","On demande de payer des frais pour recevoir un gain.","Montant énorme et invraisemblable."]},
+ {id:22,cat:"social",cw:"Acheteur Vinted",cs:"Message",scam:true,
+ body:"J'ai payé, mais Vinted demande de valider via ce lien sécurisé pour libérer l'argent : vinted-secure-pay.com",
+ text:"Arnaque marketplace : faux lien « de paiement » pour voler ta carte.",
+ clues:["Vinted gère tout dans l'appli, jamais par lien externe.","Domaine bidon.","Urgence à « valider » le paiement."]},
+ {id:23,cat:"legit",cw:"Newsletter",cs:"hello@marque.com",scam:false,
+ body:"Merci de votre inscription ! Voici votre code promo BIENVENUE10. Désinscription possible en bas de cet e-mail.",
+ text:"Légitime : mail marketing classique, lien de désinscription, rien de sensible.",
+ clues:["Aucune demande de mot de passe ni de RIB.","Lien de désinscription conforme à la loi.","Pas d'urgence ni de menace."]},
+ {id:24,cat:"sms",cw:"CPF",cs:"SMS",scam:true,
+ body:"Vos droits formation CPF expirent bientôt ! Utilisez-les avant suppression : mon-compte-cpf-2025.fr",
+ text:"Arnaque CPF : récupère tes identifiants pour vider tes droits formation.",
+ clues:["Le vrai site est moncompteformation.gouv.fr.","Les droits CPF n'expirent pas comme ça.","Pression à agir vite."]},
+ {id:25,cat:"call",cw:"« Conseiller bancaire »",cs:"Appel",scam:true,
+ body:"Bonjour, je vous appelle pour sécuriser votre compte suite à une fraude. Confirmez-moi le code que vous venez de recevoir par SMS.",
+ text:"Arnaque au faux conseiller : il déclenche lui-même le code et te le fait dicter pour valider SA fraude.",
+ clues:["Un vrai conseiller ne demande jamais ton code de validation.","Il appelle « à propos d'une fraude » qu'il a créée.","Raccroche et rappelle ta banque toi-même."]},
+ {id:26,cat:"email",cw:"PayPal",cs:"service@paypal-confirmation.net",scam:true,
+ body:"Activité suspecte détectée. Votre compte est limité. Vérifiez votre identité sous 48h :\npaypal-confirmation.net",
+ text:"Phishing PayPal : faux portail de vérification.",
+ clues:["Domaine non officiel.","Compte « limité » pour te stresser.","Va directement sur paypal.com, pas par lien."]},
+ {id:27,cat:"social",cw:"Joueur en ligne",cs:"Chat de jeu",scam:true,
+ body:"Free V-Bucks / skins gratuits ! Connecte-toi avec ton compte ici pour les recevoir : free-skins-now.com",
+ text:"Arnaque aux objets gratuits : vole le compte de jeu via un faux login.",
+ clues:["« Gratuit » contre ta connexion = piège.","Jamais ton mot de passe sur un site tiers.","Domaine inconnu."]},
+ {id:28,cat:"legit",cw:"Doctolib",cs:"Rappel de RDV",scam:false,
+ body:"Rappel : votre rendez-vous est demain à 10h30 chez Dr. Martin. Gérez-le depuis votre compte Doctolib.",
+ text:"Légitime : rappel de RDV renvoyant vers ton compte, sans demande sensible.",
+ clues:["Correspond à un RDV que tu as pris.","Aucune info bancaire demandée.","Te renvoie vers l'app/compte officiel."]},
+ {id:29,cat:"sms",cw:"La Poste",cs:"SMS",scam:true,
+ body:"Votre courrier recommandé n'a pas pu être livré. Reprogrammez la livraison (frais 2,30€) : laposte-relivraison.com",
+ text:"Faux SMS La Poste : prétexte de relivraison pour capturer ta carte.",
+ clues:["Domaine non officiel (vrai : laposte.fr).","Petits frais pour rassurer.","Lien au lieu de l'appli officielle."]},
+ {id:30,cat:"email",cw:"EDF",cs:"facture@edf-regularisation.com",scam:true,
+ body:"Erreur de facturation en votre faveur : remboursement de 68€. Renseignez vos coordonnées bancaires :\nedf-regularisation.com",
+ text:"Faux remboursement EDF : récupère ton RIB.",
+ clues:["Domaine bidon.","On promet un remboursement pour avoir ton RIB.","EDF gère ça dans ton espace client."]},
+ {id:31,cat:"social",cw:"« Influenceur »",cs:"DM",scam:true,
+ body:"Félicitations, tu es sélectionné comme ambassadeur ! Paie juste 19€ de frais d'envoi pour recevoir tes produits gratuits.",
+ text:"Faux partenariat : on te fait payer des « frais » pour rien.",
+ clues:["Sélection « surprise » non sollicitée.","On demande un paiement pour du « gratuit ».","Compte souvent récent ou usurpé."]},
+ {id:32,cat:"sms",cw:"Gouvernement",cs:"SMS",scam:true,
+ body:"AMENDE impayée : 35€. Régularisez sous 72h pour éviter la majoration : amende-gouv-paiement.fr",
+ text:"Fausse amende : faux site de paiement pour voler ta carte.",
+ clues:["Le vrai service est antai.gouv.fr / amendes.gouv.fr.","Délai court + majoration pour stresser.","Domaine non officiel."]},
+ {id:33,cat:"legit",cw:"App d'authentification",cs:"Notification",scam:false,
+ body:"Demande de connexion à votre compte. Appuyez sur Approuver si c'est vous, sinon Refuser.",
+ text:"Légitime : validation 2FA que TU déclenches en te connectant.",
+ clues:["Tu viens de tenter de te connecter.","Tu peux refuser si ce n'est pas toi.","Aucune saisie de mot de passe demandée ici."]},
+ {id:34,cat:"email",cw:"Banque",cs:"alerte@ma-banque-secure.info",scam:true,
+ body:"Votre espace sera bloqué. Réactivez vos accès en confirmant identifiant + mot de passe :\nma-banque-secure.info",
+ text:"Phishing bancaire : demande directe de tes identifiants.",
+ clues:["Une banque ne demande JAMAIS le mot de passe par mail.","Domaine en .info, non officiel.","Menace de blocage."]},
+ {id:35,cat:"qr",cw:"« RH » de l'entreprise",cs:"Email avec QR code",scam:true,
+ body:"Mettez à jour vos coordonnées de paie en scannant ce QR code avec votre téléphone.",
+ text:"Quishing : le QR contourne les filtres de l'ordi et mène à un faux portail.",
+ clues:["QR dans un mail = méfiance.","On vise les coordonnées de paie.","Vérifie auprès des RH par un canal officiel."]},
+ {id:36,cat:"social",cw:"Profil dupliqué d'un ami",cs:"Demande d'ami",scam:true,
+ body:"Salut c'est encore moi, j'ai recréé un compte. Ajoute-moi et envoie-moi le code que tu vas recevoir, c'est pour récupérer mon ancien compte.",
+ text:"Usurpation : on veut le code reçu sur TON numéro pour pirater un compte.",
+ clues:["Compte « recréé » qui te recontacte.","On te demande un code reçu par SMS.","Ne partage jamais un code de validation."]},
+ {id:37,cat:"legit",cw:"SNCF Connect",cs:"Confirmation",scam:false,
+ body:"Votre billet pour Paris→Lyon du 14/06 est confirmé. Retrouvez-le dans l'application SNCF Connect.",
+ text:"Légitime : confirmation d'achat renvoyant vers l'appli, sans demande sensible.",
+ clues:["Correspond à un achat réel.","Pas de demande de paiement supplémentaire.","Renvoie vers l'app officielle."]},
+ {id:38,cat:"sms",cw:"Banque",cs:"SMS · soir",scam:true,
+ body:"Validez votre nouvel appareil de confiance en cliquant : banq-app-secure.com/valider — sinon vos virements seront bloqués.",
+ text:"Phishing : « valider un appareil » sert à enregistrer celui DU fraudeur.",
+ clues:["Lien externe non officiel.","Menace de blocage des virements.","La banque gère ça dans son appli."]},
+ {id:39,cat:"email",cw:"« Microsoft 365 »",cs:"no-reply@ms-365-renew.com",scam:true,
+ body:"Votre mot de passe expire aujourd'hui. Conservez le même mot de passe en cliquant ici :\nms-365-renew.com/keep",
+ text:"Phishing pro : faux portail pour capturer ton mot de passe d'entreprise.",
+ clues:["Domaine non Microsoft.","« Garder le même mot de passe » via lien = absurde.","Passe par le portail officiel de ta boîte."]},
+ {id:40,cat:"prize",cw:"Concession auto",cs:"Email",scam:true,
+ body:"Vous avez gagné une voiture lors de notre tirage ! Versez 1 200€ de frais de mise en circulation pour la récupérer.",
+ text:"Arnaque au gros lot : frais réclamés pour un cadeau inexistant.",
+ clues:["Aucune participation de ta part.","Frais à payer pour « débloquer » un gain.","Montant et scénario invraisemblables."]},
+ {id:41,cat:"legit",cw:"Ma Banque",cs:"App · notification",scam:false,
+ body:"Paiement de 24,90€ chez SPOTIFY autorisé via votre carte ••4412. Solde disponible : 312€.",
+ text:"Légitime : notification d'achat de l'appli bancaire, purement informative.",
+ clues:["Correspond à un abonnement que tu connais.","Aucun lien ni action demandée.","Vient de l'appli officielle."]},
+ {id:42,cat:"social",cw:"« Instagram Support »",cs:"DM",scam:true,
+ body:"Votre compte a un copyright strike. Pour éviter la suspension, vérifiez ici sous 12h : ig-appeal-form.com",
+ text:"Faux support : faux formulaire d'« appel » pour voler le compte.",
+ clues:["Le support officiel ne passe pas par DM avec lien externe.","Délai très court.","Domaine inconnu."]},
+ {id:43,cat:"sms",cw:"Livreur",cs:"SMS",scam:true,
+ body:"Votre livreur est devant chez vous mais l'adresse est incomplète. Confirmez ici : suivi-colis-livraison.info",
+ text:"Smishing : prétexte d'adresse incomplète pour t'attirer sur une fausse page.",
+ clues:["Domaine en .info non officiel.","Crée l'urgence (« devant chez vous »).","Aucun vrai transporteur identifié."]},
+ {id:44,cat:"email",cw:"Comptabilité (interne)",cs:"directeur@ton-entreprise.com",scam:true,
+ body:"Bonjour, je suis en réunion. Peux-tu effectuer un virement urgent de 4 800€ à ce nouveau fournisseur ? Je t'envoie le RIB. C'est confidentiel.",
+ text:"Arnaque au président / faux ordre de virement : on imite un dirigeant.",
+ clues:["Urgence + confidentialité pour éviter la vérification.","Virement vers un compte nouveau/inconnu.","Vérifie de vive voix avant tout paiement."]},
+ {id:45,cat:"legit",cw:"Opérateur mobile",cs:"App · facture",scam:false,
+ body:"Votre facture de juin (19,99€) est disponible dans votre espace client. Prélèvement le 5.",
+ text:"Légitime : info de facturation classique, sans lien piégé.",
+ clues:["Montant cohérent avec ton forfait.","Renvoie vers l'espace client officiel.","Aucune saisie sensible demandée."]},
+ {id:46,cat:"social",cw:"« Assistance Snapchat »",cs:"DM",scam:true,
+ body:"Activité inhabituelle détectée. Confirme ton identifiant et ton mot de passe pour ne pas perdre ton compte.",
+ text:"Phishing direct : on te demande tes identifiants en clair.",
+ clues:["Aucun service ne demande ton mot de passe ainsi.","Menace de perdre le compte.","Compte « assistance » non officiel."]},
+ {id:47,cat:"sms",cw:"Banque",cs:"SMS",scam:true,
+ body:"Votre RIB a été modifié. Si ce n'est pas vous, sécurisez votre compte : mabanque-securite-client.com",
+ text:"Phishing : fausse alerte de changement de RIB pour voler tes accès.",
+ clues:["Lien externe non officiel.","Joue sur la peur d'un changement non voulu.","Connecte-toi via l'appli officielle uniquement."]},
+ {id:48,cat:"prize",cw:"Casino en ligne",cs:"Pop-up / Email",scam:true,
+ body:"100€ de bonus sans dépôt ! Inscrivez-vous avec votre carte bancaire pour 'vérification' et jouez tout de suite.",
+ text:"Arnaque au bonus : la « vérification » par carte sert à débiter ou voler.",
+ clues:["Bonus « gratuit » nécessitant ta carte.","Pression à s'inscrire vite.","Site souvent non régulé."]},
+ {id:49,cat:"legit",cw:"GitHub",cs:"noreply@github.com",scam:false,
+ body:"Une nouvelle clé SSH a été ajoutée à votre compte. Si ce n'était pas vous, consultez les paramètres de sécurité.",
+ text:"Légitime : alerte de sécurité standard, informative, sans lien piégé exigeant le mot de passe.",
+ clues:["Vient du domaine officiel.","T'informe sans demander d'identifiants.","Te renvoie vers les réglages, pas un faux login."]},
+ {id:50,cat:"call",cw:"« CPAM »",cs:"Message vocal",scam:true,
+ body:"Votre dossier va être suspendu. Appuyez sur 1 pour parler à un agent et régulariser votre situation immédiatement.",
+ text:"Arnaque par serveur vocal : te met en relation avec un faux agent pour soutirer infos/argent.",
+ clues:["Menace de suspension de dossier.","Incite à agir dans l'instant.","Les organismes officiels ne fonctionnent pas ainsi."]},
+];
+
+const KIND={sms:"SMS",email:"E-mail",social:"Message",call:"Appel",prize:"E-mail",qr:"QR code",legit:"Message"};
+const mem={};const hasStore=typeof window!=='undefined'&&window.storage;
+
+/* ============================================================
+   STOCKAGE — bascule automatique
+   • Config Firebase remplie  -> base en ligne (sessions entre TOUS les appareils)
+   • Sinon                    -> mode démo local (aperçu uniquement)
+   Pour activer : remplace l'objet firebaseConfig ci-dessous par
+   celui que te donne la console Firebase, puis remets en ligne.
+   ============================================================ */
+const firebaseConfig = {
+  apiKey:            "AIzaSyCDhb7a3xwZzE60e75k4i_fN-BGGSAuUcM",
+  authDomain:        "cyber-reflexe.firebaseapp.com",
+  databaseURL:       "https://cyber-reflexe-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:         "cyber-reflexe",
+  storageBucket:     "cyber-reflexe.firebasestorage.app",
+  messagingSenderId: "281528482055",
+  appId:             "1:281528482055:web:cd2a8c18e9db5f18cb6da2"
+};
+let db=null;
+try{
+  if(window.firebase && firebaseConfig.databaseURL && firebaseConfig.databaseURL.indexOf("REMPLACER")===-1){
+    firebase.initializeApp(firebaseConfig);
+    db=firebase.database();
+    console.log("Cyber Réflexe : Firebase actif (sessions en ligne).");
+  }
+}catch(e){console.warn("Firebase non initialisé :",e);}
+const fbPath=k=>k.replace(/:/g,"/"); // sess:CODE -> sess/CODE ; res:CODE:pid -> res/CODE/pid
+async function sset(k,v){
+  if(db){try{await db.ref(fbPath(k)).set(v);return;}catch(e){console.warn(e);}}
+  try{if(hasStore){await window.storage.set(k,JSON.stringify(v),true);return;}}catch(e){}
+  mem[k]=JSON.stringify(v);
+}
+async function sget(k){
+  if(db){try{const s=await db.ref(fbPath(k)).get();return s.exists()?s.val():null;}catch(e){console.warn(e);}}
+  try{if(hasStore){const r=await window.storage.get(k,true);return r?JSON.parse(r.value):null;}}catch(e){}
+  return mem[k]?JSON.parse(mem[k]):null;
+}
+async function slist(p){
+  if(db){try{const s=await db.ref(fbPath(p).replace(/\/$/,"")).get();return s.exists()?Object.keys(s.val()).map(c=>p+c):[];}catch(e){console.warn(e);}}
+  try{if(hasStore){const r=await window.storage.list(p,true);return r?r.keys:[];}}catch(e){}
+  return Object.keys(mem).filter(k=>k.startsWith(p));
+}
+
+const $=id=>document.getElementById(id);
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo({top:0});setTimeout(initReveal,40);}
+function scrollTo2(id){const el=$(id);if(el)el.scrollIntoView({behavior:'smooth'});}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1900);}
+function randCode(){const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<6;i++)s+=c[Math.floor(Math.random()*c.length)];return s;}
+function linkify(t){return t.replace(/(https?:\/\/[^\s]+|[\w-]+\.[a-z]{2,}(\/[^\s]*)?)/gi,m=>`<span class="lk">${m}</span>`);}
+
+let io;
+function initReveal(){
+  if(!('IntersectionObserver' in window)){document.querySelectorAll('.rv').forEach(e=>e.classList.add('show'));return;}
+  if(!io)io=new IntersectionObserver((ents)=>{ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.screen.active .rv:not(.show)').forEach(e=>io.observe(e));
+}
+window.addEventListener('scroll',()=>{$('hdr').classList.toggle('stuck',window.scrollY>8);});
+
+let mode='solo',curSet=[],qi=0,score=0,locked=false,missed=[],session=null,playerName='';
+function pickTen(){return shuffle(BANK).slice(0,Math.min(10,BANK.length));}
+function startSolo(){mode='solo';curSet=pickTen();beginQuiz();}
+function beginQuiz(){qi=0;score=0;missed=[];go('quiz');renderQ();}
+
+function renderQ(){
+  locked=false;const q=curSet[qi];
+  $('qcount').textContent=`Question ${qi+1} / ${curSet.length}`;
+  $('qscore').textContent=score;
+  $('bar').style.width=`${(qi/curSet.length)*100}%`;
+  $('ckind').textContent=KIND[q.cat]||'Message';
+  $('cw').textContent=q.cw;
+  $('cs').textContent=(q.cs||'').replace(/^.*?·\s*/,'');
+  $('qbody').innerHTML=linkify(q.body);
+  $('bScam').className='choice';$('bScam').disabled=false;
+  $('bLegit').className='choice';$('bLegit').disabled=false;
+  $('explain').className='explain';
+}
+function answer(saidScam){
+  if(locked)return;locked=true;const q=curSet[qi];const ok=saidScam===q.scam;
+  if(ok)score++;else missed.push(q);
+  $('bScam').disabled=true;$('bLegit').disabled=true;
+  const picked=saidScam?$('bScam'):$('bLegit');const other=saidScam?$('bLegit'):$('bScam');
+  picked.classList.add(ok?'pick-ok':'pick-no');
+  if(!ok){(q.scam?$('bScam'):$('bLegit')).classList.add('show-ok');}else{other.classList.add('dim');}
+  const ex=$('explain');ex.className='explain show '+(q.scam?'scam':'legit');
+  $('vd').textContent=q.scam?"C'était une arnaque":"C'était légitime";
+  $('extext').textContent=(ok?'Bien vu. ':'Raté. ')+q.text;
+  $('clues').innerHTML=q.clues.map(c=>`<li><i>—</i>${c}</li>`).join('');
+  $('qscore').textContent=score;
+  $('nextBtn').textContent=(qi===curSet.length-1)?'Voir mon résultat →':'Suivant →';
+}
+function nextQ(){if(qi<curSet.length-1){qi++;renderQ();}else showResult();}
+
+async function showResult(){
+  $('bar').style.width='100%';const tot=curSet.length;
+  $('rScore').textContent=score;$('rTotal').textContent='/'+tot;
+  const pct=score/tot;let v,m;
+  if(pct===1){v='Incollable';m="Aucun piège ne vous échappe. Beau réflexe.";}
+  else if(pct>=.7){v='Bon réflexe';m="Vous repérez l'essentiel. Affûtez encore les détails.";}
+  else if(pct>=.4){v='À surveiller';m="Quelques pièges sont passés — c'est précisément ce que l'on entraîne ici.";}
+  else{v='On progresse ensemble';m="Les arnaques sont conçues pour tromper. Désormais, vous en connaissez les signaux.";}
+  $('rVerd').textContent=v;$('rMsg').textContent=m;
+  if(missed.length){
+    $('reviewWrap').style.display='';
+    $('review').innerHTML=missed.map(q=>`<div class="rev"><div class="rh"><span class="w serif">${q.cw}</span><span class="tag ${q.scam?'scam':'legit'}">${q.scam?'Arnaque':'Légitime'}</span></div><p>${q.text}</p></div>`).join('');
+  }else{$('reviewWrap').style.display='none';}
+  if(mode==='session'&&session){
+    $('resKicker').textContent='Résultat · '+session.title;
+    const pid='p_'+Date.now()+'_'+Math.floor(Math.random()*999);
+    await sset(`res:${session.code}:${pid}`,{name:playerName,score,total:tot,missedIds:missed.map(q=>q.id),ts:Date.now()});
+    $('savedNote').style.display='';$('savedTxt').textContent=`Score transmis à votre formateur — session ${session.code}.`;
+    $('resBtn').textContent='Terminé';
+  }else{$('resKicker').textContent='Résultat';$('savedNote').style.display='none';$('resBtn').textContent='Rejouer';}
+  go('result');
+}
+function afterResult(){if(mode==='session'){mode='solo';go('home');}else{curSet=pickTen();beginQuiz();}}
+
+async function createSession(){
+  const title=$('sessTitle').value.trim()||'Session sans nom';const code=randCode();
+  const qids=pickTen().map(q=>q.id);
+  await sset(`sess:${code}`,{code,title,qids,ts:Date.now()});
+  window.__newCode=code;$('newCode').textContent=code;$('newTitle').textContent=title;
+  $('createForm').style.display='none';$('createDone').style.display='';
+}
+function copyCode(){const c=$('newCode').textContent;navigator.clipboard?.writeText(c);toast('Code copié — '+c);}
+async function joinSession(){
+  const code=$('joinCode').value.trim().toUpperCase();const name=$('joinName').value.trim();$('joinErr').textContent='';
+  if(code.length<6){$('joinErr').textContent='Code à six caractères requis.';return;}
+  if(!name){$('joinErr').textContent='Indiquez votre prénom.';return;}
+  const s=await sget(`sess:${code}`);
+  if(!s){$('joinErr').textContent='Session introuvable. Vérifiez le code.';return;}
+  session=s;playerName=name;mode='session';
+  curSet=s.qids.map(id=>BANK.find(q=>q.id===id)).filter(Boolean);
+  if(curSet.length<5)curSet=pickTen();
+  beginQuiz();
+}
+async function openDash(raw){
+  const code=(raw||'').trim().toUpperCase();if($('lookupErr'))$('lookupErr').textContent='';
+  if(code.length<6){if($('lookupErr'))$('lookupErr').textContent='Code à six caractères requis.';return;}
+  const s=await sget(`sess:${code}`);
+  if(!s){if($('lookupErr'))$('lookupErr').textContent='Session introuvable.';toast('Session introuvable');return;}
+  window.__dashCode=code;$('dashTitle').textContent=s.title;$('dashCode').textContent=code;
+  const keys=await slist(`res:${code}:`);const results=[];for(const k of keys){const r=await sget(k);if(r)results.push(r);}
+  results.sort((a,b)=>b.score-a.score);
+  $('dParticipants').textContent=results.length;
+  const tot=results.length?(results[0].total||10):10;
+  if(results.length){const avg=results.reduce((s,r)=>s+r.score,0)/results.length;$('dAvg').textContent=avg.toFixed(1)+'/'+tot;$('dBest').textContent=results[0].score+'/'+tot;}
+  else{$('dAvg').textContent='—';$('dBest').textContent='—';}
+  if(!results.length){
+    $('ptable').innerHTML='<div class="empty">Aucun participant n\'a encore terminé.<br>Partagez le code <b>'+code+'</b> puis actualisez.</div>';$('weakWrap').innerHTML='';
+  }else{
+    $('ptable').innerHTML=results.map(r=>{const pct=Math.round(r.score/tot*100);const col=pct>=70?'var(--safe)':pct>=40?'var(--gold)':'var(--scam)';
+      return `<div class="prow"><span class="pn">${r.name}</span><span class="pbarwrap"><span class="pbar" style="width:${pct}%;background:${col}"></span></span><span class="ps">${r.score}/${tot}</span></div>`;}).join('');
+    const miss={};results.forEach(r=>(r.missedIds||[]).forEach(id=>miss[id]=(miss[id]||0)+1));
+    const top=Object.entries(miss).sort((a,b)=>b[1]-a[1]).slice(0,4);
+    $('weakWrap').innerHTML=top.length?('<h3>Pièges qui trompent le plus</h3>'+top.map(([id,n])=>{const q=BANK.find(x=>x.id==id);if(!q)return'';const pct=Math.round(n/results.length*100);
+      return `<div class="wrow"><span class="ww serif">${q.cw}</span><span class="wk">${q.scam?'arnaque':'légitime'}</span><span class="wp">${pct}%</span></div>`;}).join('')):'';
+  }
+  go('dash');
+}
+['joinCode','lookupCode'].forEach(id=>{const el=$(id);el&&el.addEventListener('input',e=>e.target.value=e.target.value.toUpperCase());});
+initReveal();
+</script>
+</body>
+</html>
